@@ -1,0 +1,26 @@
+# Local environments and secrets
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Generated Python and local database files
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.sqlite3-journal
+*.log
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Separate practice project; the assignment uses config/
+/config2/
+
+# README excluded as requested
+/README.md
