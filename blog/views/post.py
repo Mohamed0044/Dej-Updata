@@ -6,7 +6,7 @@ from rest_framework.generics import CreateAPIView
 from ..serializers import PostSerializer
 from ..serializers import UserSerializer
 from ..models import Post
-
+from ..ai_content.service.summarize import PostNotFound, summarize_post
 
 
 
@@ -36,3 +36,15 @@ def get_posts(request):
             {"error":"An unexpected error occured."},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
+
+
+@api_view(["POST"])
+def summarize_post_view(request, post_id):
+    try:
+        result = summarize_post(post_id)
+    except PostNotFound as error:
+        return Response({"error": str(error)}, status=status.HTTP_404_NOT_FOUND)
+    except ValueError as error:
+        return Response({"error": str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response(result, status=status.HTTP_200_OK)
